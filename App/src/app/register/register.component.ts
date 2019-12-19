@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { HttpClient,HttpParams } from '@angular/common/http';
+import { SessionService } from '../session';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  emailFormControl = new FormControl;
+
+  constructor(private http: HttpClient,private session: SessionService) { }
 
   ngOnInit() {
+  }
+
+  start(){
+    var userMail = this.emailFormControl.value;
+
+    let body = new HttpParams({
+      fromObject:{
+        'userMail':userMail
+      }
+    });
+
+    var url = 'http://ec2-18-221-114-73.us-east-2.compute.amazonaws.com:8080/api/user';
+
+    this.http.post<any>(url,body).subscribe(
+      data=>{
+        this.session.setAuth(true);
+        this.session.setID(data['userID']);
+        this.session.setUserMail(userMail)
+      }
+    )
+    var ID = this.session.getID
+    alert(localStorage.getItem('auth'));
   }
 
 }
