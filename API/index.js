@@ -37,7 +37,8 @@ app.post('/api/user',(req,res)=>{
 	conn.query(sql,[values],(err,rows,field)=>{
 	response = rows[0];
 	if (!response){
-	var sql = 'INSERT INTO user(userMail) VALUES (?)';
+	var values = [req.body.userMail,0,0];
+	var sql = 'INSERT INTO user(userMail,userPoint,userACount) VALUES (?)';
 	conn.query(sql,[values],(err,rows,field)=>{
 	var response = rows.insertId;
 	res.send({"userID":rows.insertId});
@@ -73,20 +74,44 @@ app.post('/api/addquiz',(req,res)=>{
 
 app.post('/api/quiz',(req,res)=>{
 	var values = [req.body.userID,req.body.quizID];
-	var sql = 'SELECT * FROM answer WHERE userID = ? AND quizID = ?';
-	conn.query(sql,[values],(err,rows,field)=>{
-	if(rows){
-//	var result = Object.assign({},{"status":true},rows[0]);
-//	res.send(result);
-	res.send({"status":false})
+	var sql = 'SELECT COUNT(userID) AS count  FROM answer WHERE userID = ? AND quizID = ?';
+	conn.query(sql,[req.body.userID,req.body.quizID],(err,rows,field)=>{
+	if(rows[0].count != 0){
+	res.send([{'status':false,'q':'You have already answerd this question'}])
 	}else{
 	var values = [req.body.quizID];
 	var sql = 'SELECT * FROM quiz WHERE quizID = ?';
 	conn.query(sql,[values],(err,rows,field)=>{
 	var result = Object.assign({},{"status":true},rows[0]);
-        res.send(result);
+        res.send([result]);
 })
 }
+})
+})
+
+
+app.post('/api/ans',(req,res)=>{
+	var values = [req.body.userID];
+	if (req.body.point == 1){
+		var sql = 'UPDATE user SET userPoint = userPoint+5,userACount = userACount+1 WHERE userID = ?';
+	}else{
+		var sql = 'UPDATE user SET userACount = userACount+1 WHERE userID = ?';
+
+	}
+	conn.query(sql,[values],(err,rows,field)=>{
+})
+	var values = [req.body.userID,req.body.quizID,req.body.ans];
+	var sql = 'INSERT INTO answer(userID,quizID,answer) VALUES (?)';
+	conn.query(sql,[values],(err,rows,field)=>{
+		res.send({'status':true})
+})
+})
+
+app.post('/api/profile',(req,res)=>{
+	var values = [req.body.userID];
+	var sql = 'SELECT * FROM user WHERE userID = ?';
+	conn.query(sql,[values],(err,rows,fields)=>{
+	res.send(rows)
 })
 })
 
