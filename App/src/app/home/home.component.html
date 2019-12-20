@@ -1,0 +1,13 @@
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Scan QR or Enter Quiz ID</mat-card-title>
+      </mat-card-header>
+    <div class="example-container">
+        <mat-form-field>
+          <input matInput placeholder="Quiz ID" [formControl] = 'idFormControl'>
+        </mat-form-field>
+      </div>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="start()">START</button>
+      </mat-card-actions>
+</mat-card>

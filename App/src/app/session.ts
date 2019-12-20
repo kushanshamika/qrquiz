@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-
+import {CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot} from '@angular/router';
 
 @Injectable({
     providedIn:'root'
 })
 export class SessionService {
+
+    constructor(
+        private router: Router
+      ) {}
 
     private auth:boolean = false;
     private userID:string = "0";
@@ -37,5 +41,15 @@ export class SessionService {
     getUserMail():string{
         return localStorage.getItem('userMail');
     }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  
+        if (this.getAuth()) {
+          return true;
+        } else {
+          this.router.navigate(['/register']);
+          return false;
+        }
+      }
 
 }

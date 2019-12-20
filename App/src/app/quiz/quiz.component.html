@@ -1,14 +1,14 @@
 <mat-card class="card">
     <mat-list-item *ngFor="let quiz of quizs">
         <h5 mat-subheader mat-line>{{quiz.q}}</h5>
-        <mat-radio-group [formControl]="answerFormControl">
+        <mat-radio-group [formControl]="answerFormControl" *ngIf="quiz.status">
             <h6 mat-line><mat-radio-button value="1">{{quiz.a1}}</mat-radio-button></h6>
             <h6 mat-line><mat-radio-button value="2">{{quiz.a2}}</mat-radio-button></h6>
             <h6 mat-line><mat-radio-button value="3">{{quiz.a3}}</mat-radio-button></h6>
             <h6 mat-line><mat-radio-button value="4">{{quiz.a4}}</mat-radio-button></h6>
         </mat-radio-group>
-      </mat-list-item>
       <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="submit()">SUBMIT</button>
+        <button mat-raised-button color="primary" *ngIf="quiz.status" (click)="submit()">SUBMIT</button>
       </mat-card-actions>
+    </mat-list-item>
 </mat-card>

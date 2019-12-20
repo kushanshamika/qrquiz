@@ -11,14 +11,16 @@ import {MatModule} from './material.theme';
 
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
-import { QuizComponent } from './quiz/quiz.component'
+import { QuizComponent } from './quiz/quiz.component';
+import { HomeComponent } from './home/home.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileComponent,
     RegisterComponent,
-    QuizComponent
+    QuizComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

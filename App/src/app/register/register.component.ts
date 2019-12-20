@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient,HttpParams } from '@angular/common/http';
 import { SessionService } from '../session';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
 
   emailFormControl = new FormControl;
 
-  constructor(private http: HttpClient,private session: SessionService) { }
+  constructor(private http: HttpClient,private session: SessionService,public router: Router) { }
 
   ngOnInit() {
   }
@@ -35,8 +36,10 @@ export class RegisterComponent implements OnInit {
         this.session.setUserMail(userMail)
       }
     )
-    var ID = this.session.getID
-    alert(localStorage.getItem('auth'));
+    this.router.navigate(
+      ['/profile']
+    )
+
   }
 
 }
