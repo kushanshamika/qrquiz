@@ -37,6 +37,12 @@ export class QuizComponent implements OnInit {
       this.id = params['id']
     });
 
+    if(!this.id){
+      this.router.navigate(
+        ['/error']
+      )
+    }
+
     let body = new HttpParams({
       fromObject:{
         'quizID':this.id,

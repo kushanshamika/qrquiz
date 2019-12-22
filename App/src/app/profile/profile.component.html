@@ -1,9 +1,14 @@
 <mat-card class="card">
     <mat-card-header>
-        <mat-card-title>Welcome to Family Fiesta Quiz Portal</mat-card-title>
+        <mat-card-title>Welcome to Nena Mihindu Quiz Portal</mat-card-title>
       </mat-card-header>
       <mat-list role="list" *ngFor="let user of users">
+        <mat-list-item role="listitem"><mat-icon aria-hidden="false" aria-label="Example home icon" style="padding-right: 10px;">person_outline</mat-icon>User ID {{user.userID}}</mat-list-item>
         <mat-list-item role="listitem"><mat-icon aria-hidden="false" aria-label="Example home icon" style="padding-right: 10px;">done</mat-icon> {{user.userPoint}} Points</mat-list-item>
         <mat-list-item role="listitem"><mat-icon aria-hidden="false" aria-label="Example home icon" style="padding-right: 10px;">hourglass_empty</mat-icon> {{user.userACount}}/20 Answered</mat-list-item>
       </mat-list>
+      <mat-card-actions>
+        <a routerLink=''><button mat-button mat-raised-button color="primary">START</button></a>
+        <p>Scan QR or enter quiz ID by clicking start button</p>
+      </mat-card-actions>
 </mat-card>
